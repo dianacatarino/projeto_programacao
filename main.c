@@ -139,14 +139,20 @@ int main()
 
             switch(opcao_estatisticas)
             {
-            /*case 1:
+            case 1:
                 numero_atividades = numero_atividades_associacao(atividades,numero_atividades);
+                fflush(stdin);
+                getchar();
                 break;
             case 2:
                 percentagem_inscricoes_escola(atividades,inscricoes,numero_inscricoes,numero_atividades);
-                break;*/
+                fflush(stdin);
+                getchar();
+                break;
             case 3:
                 numero_inscricoes = valor_inscricoes_por_2_datas(atividades,inscricoes,numero_atividades,numero_inscricoes);
+                fflush(stdin);
+                getchar();
                 break;
             }
             break;
@@ -157,11 +163,13 @@ int main()
             {
             case 1:
                 gravar_dados_ficheiro(participantes,atividades,inscricoes,numero_estudantes,numero_atividades,numero_inscricoes);
+                fflush(stdin);
+                getchar();
                 break;
             case 2:
                 numero_estudantes = ler_dados_ficheiro(participantes,atividades,inscricoes);
-                numero_atividades = ler_dados_ficheiro(participantes,atividades,inscricoes);
-                numero_inscricoes = ler_dados_ficheiro(participantes,atividades,inscricoes);
+                fflush(stdin);
+                getchar();
                 break;
             }
             break;
@@ -170,7 +178,7 @@ int main()
             printf("Fim");
             break;
         default:
-            printf("Operacao Inválida");
+            printf("Operacao Invalida");
         }
     }
     while(opcao != 0);
@@ -229,7 +237,6 @@ void mostrar_participantes(t_participante participantes[],int numero_participant
 
 int registar_atividades(t_atividade atividades[],int numero_atividades)
 {
-
     printf("Indique a designacao da atividade: ");
     scanf("%s",atividades[numero_atividades].designacao);
     printf("\nIndique a data da atividade: ");
@@ -258,14 +265,14 @@ void mostrar_atividades(t_atividade atividades[],int numero_atividades)
     for(indice = 0; indice<numero_atividades; indice++)
     {
         atividades[numero_atividades].identificador = indice + 1;
-        printf("\nIdentificador da atividade: %i",indice+1);
-        printf("\nDesignacao da atividade: %s",atividades[numero_atividades].designacao);
-        printf("\nData da atividade: %i-%i-%i",atividades[numero_atividades].data_atividade.dia,atividades[numero_atividades].data_atividade.mes,atividades[numero_atividades].data_atividade.ano);
-        printf("\nHora da atividade: %i:%i",atividades[numero_atividades].hora_atividade.hora,atividades[numero_atividades].hora_atividade.minutos);
-        printf("\nLocal da atividade: %s",atividades[numero_atividades].local);
-        printf("\nTipo da atividade: %s",atividades[numero_atividades].tipo);
-        printf("\nAssociacao da atividade: %s",atividades[numero_atividades].associacao);
-        printf("\nValor da inscricao da atividade: %f",atividades[numero_atividades].valor_inscricao);
+        printf("\nIdentificador da atividade: %i",atividades[indice].identificador);
+        printf("\nDesignacao da atividade: %s",atividades[indice].designacao);
+        printf("\nData da atividade: %i %i %i",atividades[indice].data_atividade.dia,atividades[indice].data_atividade.mes,atividades[indice].data_atividade.ano);
+        printf("\nHora da atividade: %i %i",atividades[indice].hora_atividade.hora,atividades[indice].hora_atividade.minutos);
+        printf("\nLocal da atividade: %s",atividades[indice].local);
+        printf("\nTipo da atividade: %s",atividades[indice].tipo);
+        printf("\nAssociacao da atividade: %s",atividades[indice].associacao);
+        printf("\nValor da inscricao da atividade: %2.f",atividades[indice].valor_inscricao);
     }
 }
 
@@ -273,7 +280,7 @@ void mostrar_atividades(t_atividade atividades[],int numero_atividades)
 int registar_inscricoes(t_inscricao inscricoes[],int numero_inscricoes)
 {
 
-    printf("\nIndique o valor pago da inscrição: ");
+    printf("\nIndique o valor pago da inscricao: ");
     scanf("%f",&inscricoes[numero_inscricoes].valor_pago);
     printf("\nIndique a data da inscricao: ");
     scanf("%i %i %i",&inscricoes[numero_inscricoes].data_inscricao.dia,&inscricoes[numero_inscricoes].data_inscricao.mes,&inscricoes[numero_inscricoes].data_inscricao.ano);
@@ -289,27 +296,30 @@ int registar_inscricoes(t_inscricao inscricoes[],int numero_inscricoes)
 void mostrar_inscricoes(t_inscricao inscricoes[],int numero_inscricoes)
 {
     int indice;
+    t_participante participantes;
+    t_atividade atividades;
 
     for(indice = 0; indice<numero_inscricoes; indice++)
     {
-        printf("\nIdentificador da inscricao: %i",indice+1);
-        printf("\nIdentificador do participante: %i",inscricoes[numero_inscricoes].identificador_participante);
-        printf("\nIdentificador da atividade: %i",inscricoes[numero_inscricoes].identificador_atividade);
-        printf("\nValor pago: %f",inscricoes[numero_inscricoes].valor_pago);
-        printf("\nData: %i-%i-%i",inscricoes[numero_inscricoes].data_inscricao.dia,inscricoes[numero_inscricoes].data_inscricao.mes,inscricoes[numero_inscricoes].data_inscricao.ano);
-        printf("\nHora: %i:%i:%i",inscricoes[numero_inscricoes].hora_inscricao.hora,inscricoes[numero_inscricoes].hora_inscricao.minutos,inscricoes[numero_inscricoes].hora_inscricao.segundos);
+        inscricoes[indice].identificador = indice + 1;
+        printf("\nIdentificador da inscricao: %i",inscricoes[indice].identificador);
+        printf("\nIdentificador do participante: %i",inscricoes[indice].identificador_participante);
+        printf("\nIdentificador da atividade: %i",inscricoes[indice].identificador_atividade);
+        printf("\nValor pago: %2.f",inscricoes[indice].valor_pago);
+        printf("\nData: %i %i %i",inscricoes[indice].data_inscricao.dia,inscricoes[indice].data_inscricao.mes,inscricoes[indice].data_inscricao.ano);
+        printf("\nHora: %i %i %i",inscricoes[indice].hora_inscricao.hora,inscricoes[indice].hora_inscricao.minutos,inscricoes[indice].hora_inscricao.segundos);
     }
 }
 
-/*int numero_atividades_associacao(t_atividade atividades[],int numero_atividades)
+int numero_atividades_associacao(t_atividade atividades[],int numero_atividades)
 {
     int contador, indice;
 
     for (indice = 0; indice < MAXIMO_ATIVIDADES; indice++)
     {
-        contador = atividades[indice].associacao[] + atividades[indice].associacao[];
-        contador = (numero_atividades / atividades[indice].associacao[]);
-        printf("Número de atividades por associação: %i",contador);
+        contador = (int)atividades[indice].associacao + (int)atividades[indice].associacao;
+        contador = (numero_atividades / (int)atividades[indice].associacao);
+        printf("Numero de atividades por associacao: %i",contador);
     }
     return contador;
 }
@@ -320,11 +330,11 @@ void percentagem_inscricoes_escola(t_atividade atividades[],t_inscricao inscrico
 
     for (indice = 0; indice < MAXIMO_INSCRICOES; indice++)
     {
-        percentagem = (numero_inscricoes / atividades[indice].associacao[]) * 100;
+        percentagem = (numero_inscricoes / (int)atividades[indice].associacao) * 100;
     }
-    printf("A percentagem de inscricoes por associação: %i", percentagem);
+    printf("A percentagem de inscricoes por associacao: %i", percentagem);
 
-}*/
+}
 
 int valor_inscricoes_por_2_datas(t_atividade atividades[],t_inscricao inscricoes[],int numero_atividades, int numero_inscricoes)
 {
@@ -526,4 +536,3 @@ char confirmar_saida(void)
 
     return saida;
 }
-
